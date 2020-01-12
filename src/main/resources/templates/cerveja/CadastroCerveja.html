@@ -1,90 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/LayoutPadrao}">
+
 <head>
-	<meta charset="UTF-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-	<title>Brewer</title>
-
-	<link rel="stylesheet" type="text/css" href="/layout/stylesheets/vendors.min.css"/>
-	<link rel="stylesheet" type="text/css" href="/layout/stylesheets/algaworks.min.css"/>
-	<link rel="stylesheet" type="text/css" href="/layout/stylesheets/application.css"/>
+	<title>Cadastro de cervejas</title>
 </head>
+
 <body>
-
-<div class="aw-layout-page">
-
-	<nav class="navbar  navbar-fixed-top  navbar-default  js-sticky-reference" id="main-navbar">
-	  <div class="container-fluid">
-
-	    <div class="navbar-header">
-	      <a class="navbar-brand  hidden-xs" href="#">
-	        <img alt="AlgaWorks" src="/layout/images/logo.png"/>
-	      </a>
-
-	      <ul class="nav  navbar-nav">
-	        <li>
-	          <a href="#" class="js-sidebar-toggle"><i class="fa  fa-bars"></i></a>
-	        </li>
-	      </ul>
-	    </div>
-
-	    <ul class="nav navbar-nav  navbar-right">	      
-	      <li>
-	        <a href="#"><em class="fa  fa-sign-out"></em></a>
-	      </li> 
-	    </ul>
-
-	  </div>
-	</nav>
-
-	<aside class="aw-layout-sidebar  js-sidebar">
-		<div class="aw-layout-sidebar__content">
-
-    <nav class="aw-menu  js-menu">
-      <ul class="aw-menu__list">
-
-        <li class="aw-menu__item">
-          <a href="dashboard.html"><i class="fa  fa-fw  fa-home"></i><span>Dashboard</span></a>
-        </li>
-
-        <li class="aw-menu__item  is-active">
-          <a href="#">
-            <i class="fa  fa-fw  fa-file-text"></i><span>Cadastros</span>
-            <i class="aw-menu__navigation-icon  fa"></i>
-          </a>
-      
-          <ul class="aw-menu__list  aw-menu__list--sublist">
-            <li class="aw-menu__item  aw-menu__item--link"><a href="cadastro-produto.html">Cadastro de produto</a></li>
-            <li class="aw-menu__item  aw-menu__item--link  is-active"><a href="pesquisa-produtos.html">Pesquisa de produtos</a></li>
-            <li class="aw-menu__item  aw-menu__item--link"><a href="tabela-sem-dados.html">Tabela sem dados</a></li>
-          </ul>
-        </li>
-
-        <li class="aw-menu__item  is-expanded">
-          <a href="#">
-            <i class="fa  fa-fw  fa-file-text"></i><span>Páginas comuns</span>
-            <i class="aw-menu__navigation-icon  fa"></i>
-          </a>
-
-          <ul class="aw-menu__list  aw-menu__list--sublist">
-            <li class="aw-menu__item  aw-menu__item--link"><a href="pagina-vazia.html">Página vazia</a></li>
-            <li class="aw-menu__item  aw-menu__item--link"><a href="login.html">Login</a></li>
-            <li class="aw-menu__item  aw-menu__item--link"><a href="esqueceu-a-senha.html">Esqueceu a senha</a></li>
-            <li class="aw-menu__item  aw-menu__item--link"><a href="403.html">403</a></li>
-            <li class="aw-menu__item  aw-menu__item--link"><a href="404.html">404</a></li>
-            <li class="aw-menu__item  aw-menu__item--link"><a href="500.html">500</a></li>
-          </ul>
-        </li>
-
-      </ul>
-    </nav>
-
-		</div>
-	</aside>
-
-	<section class="aw-layout-content  js-content">
+	<section layout:fragment="conteudo">
 	
 	<div class="page-header">
 	<div class="container-fluid">
@@ -124,9 +48,13 @@
 	<div class="row">
 		<div class="col-sm-3 form-group">
 			<label for="estilo">Estilo</label>
-			<select id="estilo" class="form-control">
-				<option value="">Selecione estilo</option>
-			</select>
+			<div class="input-group">
+				<select id="estilo" class="form-control">
+					<option value="">Selecione estilo</option>
+				</select>					
+				<a class="input-group-addon" href="#" data-toggle="modal" data-target="#cadastroRapidoEstilo"><i class="fa fa-plus-circle fa-lg"></i></a>				
+			</div>
+			
 		</div>
 		
 		<div class="col-sm-3 form-group">
@@ -139,7 +67,7 @@
 		<div class="col-sm-3 form-group">
 			<label for="teorAlcoolico">Teor alcoólico</label>
 			<div class="input-group">
-				<input id="teorAlcoolico" type="text" class="form-control">
+				<input id="teorAlcoolico" type="text" class="form-control js-decimal">
 				<span class="input-group-addon">%</span>
 			</div>
 		</div>
@@ -165,21 +93,21 @@
 			<label for="preco">Preço</label>
 			<div class="input-group">
 				<span class="input-group-addon">R$</span>
-				<input id="preco" type="text" class="form-control">				
+				<input id="preco" type="text" class="form-control js-decimal">				
 			</div>
 		</div>
 		
 		<div class="col-sm-3 form-group">
 			<label for="comissao">Comissão</label>
 			<div class="input-group">				
-				<input id="comissao" type="text" class="form-control">	
+				<input id="comissao" type="text" class="form-control js-decimal">	
 				<span class="input-group-addon">%</span>			
 			</div>
 		</div>
 		
 		<div class="col-sm-3 form-group">
 			<label for="estoque">Estoque</label>
-			<input id="estoque" type="text" class="form-control">
+			<input id="estoque" type="text" class="form-control js-plain">
 		</div>
 		
 	
@@ -188,18 +116,9 @@
 	<input class="btn btn-primary" type="submit" value="Salvar">
 </form>
 </div>
+
+<div th:replace="estilo/CadastroRapidoEstilo :: modal"></div>
+
 </section>
-	
-	<footer class="aw-layout-footer  js-content">
-		<div class="container-fluid">
-			<span class="aw-footer-disclaimer">&copy; 2016 AlgaWorks. Todos os direitos reservados.</span>
-		</div>
-	</footer>
-
-</div>
-
-<script src="/layout/javascripts/vendors.min.js"></script>
-<script src="/layout/javascripts/algaworks.min.js"></script>
-
 </body>
 </html>

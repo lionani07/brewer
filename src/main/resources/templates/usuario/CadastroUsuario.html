@@ -4,7 +4,8 @@
 layout:decorate="~{layout/LayoutPadrao}">
 
 <head>
-	<title>Cadastro de usuarios</title>
+	<title>Cadastro de usuarios</title>	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}"/>
 </head>
 
 <body>
@@ -46,11 +47,11 @@ layout:decorate="~{layout/LayoutPadrao}">
 				<label>Confirmaçao de senha</label>
 				<input type="password" class="form-control">
 			</div>
-			<div class="col-sm-1 form-group">
+			<div class="form-group">
 				<label>Status</label>
-				<div class="checkbox checkbox-inline">
-					<input type="checkbox" name="status">
-					<label>Ativo</label>					
+				<div>
+					<input type="checkbox" class="js-status"
+					data-size="normal" data-off-color="danger" data-on-text="Ativo" data-off-text="Inativo">
 				</div>
 			</div>
 		</div>
@@ -76,5 +77,12 @@ layout:decorate="~{layout/LayoutPadrao}">
 </div>
 
 </section>
+
+<th:block layout:fragment="js-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script>
+		$(".js-status").bootstrapSwitch();
+	</script>
+</th:block>
 </body>
 </html>

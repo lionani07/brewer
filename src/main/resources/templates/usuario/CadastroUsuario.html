@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<title>Cadastro de usuarios</title>
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+	
+<div class="page-header">
+	<div class="container-fluid">
+		<h1>Cadastro de usuarios</h1>
+	</div>
+</div>
+
+<div class="container-fluid">
+	<form action="">
+	
+		<div class="row">
+			<div class="col-sm-12 form-group">
+				<label>Nome</label>
+				<input type="text" class="form-control" autofocus="autofocus">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-6 form-group">
+				<label>E-mail</label>
+				<input type="text" class="form-control">
+			</div>
+			<div class="col-sm-3 form-group">
+				<label>Data de nascimento</label>
+				<input type="text" class="form-control">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-3 form-group">
+				<label>Senha</label>
+				<input type="password" class="form-control">
+			</div>
+			<div class="col-sm-3 form-group">
+				<label>Confirmaçao de senha</label>
+				<input type="password" class="form-control">
+			</div>
+			<div class="col-sm-1 form-group">
+				<label>Status</label>
+				<div class="checkbox checkbox-inline">
+					<input type="checkbox" name="status">
+					<label>Ativo</label>					
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-3 form-group">
+				<label>Grupos</label>
+				<div>
+					<div class="checkbox checkbox-inline">
+						<input type="checkbox">
+						<label>Administrador</label>
+					</div>
+					<div class="checkbox checkbox-inline">
+						<input type="checkbox">
+						<label>Vendedor</label>
+					</div>				
+				</div>				
+			</div>			
+		</div>	
+	
+	<input type="submit" value="Salvar" class="btn btn-sm btn-primary">
+	</form>	
+</div>
+
+</section>
+</body>
+</html>

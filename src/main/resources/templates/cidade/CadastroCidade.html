@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<title>Cadastro de cidades</title>
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+	
+<div class="page-header">
+	<div class="container-fluid">
+		<h1>Cadastro de cidades</h1>
+	</div>
+</div>
+
+<div class="container-fluid">
+	<form action="">
+	<div class="row">
+		<div class="col-sm-4 form-group">
+			<label>Estado</label>
+			<select class="form-control">
+				<option value="">Seleccione o estado</option>
+			</select>
+		</div>
+		<div class="col-sm-8 form-group">
+			<label>Nome</label>
+			<input type="text" class="form-control">
+		</div>
+	</div>
+	
+	<input type="submit" value="Salvar" class="btn btn-sm btn-primary">
+	</form>
+	
+</div>
+
+</section>
+</body>
+</html>

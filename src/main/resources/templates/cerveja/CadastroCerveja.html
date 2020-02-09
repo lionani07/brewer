@@ -51,6 +51,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 			<div class="input-group">
 				<select id="estilo" class="form-control">
 					<option value="">Selecione estilo</option>
+					<option th:each="estilo : ${estilos}" th:value="${estilo.codigo}">[[${estilo.nome}]]</option>
 				</select>					
 				<a class="input-group-addon" href="#" data-toggle="modal" data-target="#cadastroRapidoEstilo"><i class="fa fa-plus-circle fa-lg"></i></a>				
 			</div>
@@ -61,6 +62,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 			<label for="sabor">Sabor</label>
 			<select id="sabor" class="form-control">
 				<option value="">Selecione sabor</option>
+				<option th:each="sabor : ${sabores}" th:value="${sabor}">[[${sabor.descricao}]]</option>
 			</select>
 		</div>
 		
@@ -75,16 +77,13 @@ layout:decorate="~{layout/LayoutPadrao}">
 		<div class="col-lg-3 col-sm-6 form-group">
 			<label>Origem</label>
 			<div>
-				<div class="radio radio-inline">
-					<input type="radio" name="origem">
-					<label>Nacional</label>
-				</div>
-				<div class="radio radio-inline">
-					<input type="radio" name="origem">
-					<label>Internacional</label>
-				</div>
+				<th:block th:each="origem : ${origens}">
+					<div class="radio radio-inline">
+						<input th:id="|id_${origem}|" type="radio" th:value="${origem}" name="origem" >
+						<label th:for="|id_${origem}|">[[${origem.descricao}]]</label>
+					</div>				
+				</th:block>
 			</div>
-			
 		</div>
 	</div>
 	

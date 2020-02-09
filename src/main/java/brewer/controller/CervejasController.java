@@ -16,6 +16,7 @@ import brewer.model.Cerveja;
 import brewer.model.Origem;
 import brewer.model.Sabor;
 import brewer.repository.Estilos;
+import brewer.service.CadastroCervejaService;
 
 @Controller
 @RequestMapping("/cervejas")
@@ -23,6 +24,9 @@ public class CervejasController {
 	
 	@Autowired
 	private Estilos estilos;
+	
+	@Autowired
+	private CadastroCervejaService cadastroCervejaService;
 	
 	@GetMapping("/novo")
 	public ModelAndView novo(Cerveja cerveja) {
@@ -35,11 +39,13 @@ public class CervejasController {
 	
 	@PostMapping("/novo")
 	public ModelAndView salvar(@Valid Cerveja cerveja, BindingResult result, Model model, RedirectAttributes attributes) {		
+		
 		if(result.hasErrors()) {
 			return novo(cerveja);
 		}
-		System.out.println("Cadastrar cerceja!" + cerveja.getSku());			
-		attributes.addFlashAttribute("msg", "Cerveja cadastrada com succeso");
+		
+		cadastroCervejaService.salvar(cerveja);
+		attributes.addFlashAttribute("msgSuccess", "Cerveja cadastrada com succeso!");
 		return new ModelAndView("redirect:/cervejas/novo");
 	}
 	

@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div class="alert alert-success alert-dismissible" th:if="${not #strings.isEmpty(msgSuccess)}" >
+	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	<div><i class="fa fa-check-circle"></i> [[${msgSuccess}]]</div>	
+</div>
+
+</html>

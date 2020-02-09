@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import brewer.validation.SKU;
+
 @Entity
 @Table(name = "cerveja")
 public class Cerveja implements Serializable{
@@ -25,6 +27,7 @@ public class Cerveja implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
+	@SKU
 	@NotBlank(message = "SKU é orbigatório")
 	private String sku;
 	
@@ -165,8 +168,6 @@ public class Cerveja implements Serializable{
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
-	}
-	
-	
+	}		
 
 }

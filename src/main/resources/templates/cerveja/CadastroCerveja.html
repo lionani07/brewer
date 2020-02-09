@@ -20,11 +20,11 @@ layout:decorate="~{layout/LayoutPadrao}">
 
 <div class="container-fluid">
 
+	<th:block th:include="fragments/MessageSuccess"></th:block>
+
 <form method="post" th:object="${cerveja}" class="form-vertical">
 	
-	<th:block th:each="erro : ${#fields.detailedErrors()}">
-		<div>[[ ${erro.message} ]]</div>
-	</th:block>
+	<th:block th:include="fragments/MessagensErroValidacao"></th:block>
 	
 	<div class="row">		
 		<div class="col-sm-2 form-group">
@@ -49,7 +49,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 		<div class="col-sm-3 form-group">
 			<label for="estilo">Estilo</label>
 			<div class="input-group">
-				<select id="estilo" class="form-control">
+				<select id="estilo" class="form-control" th:field="*{estilo}">
 					<option value="">Selecione estilo</option>
 					<option th:each="estilo : ${estilos}" th:value="${estilo.codigo}">[[${estilo.nome}]]</option>
 				</select>					
@@ -60,7 +60,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 		
 		<div class="col-sm-3 form-group">
 			<label for="sabor">Sabor</label>
-			<select id="sabor" class="form-control">
+			<select id="sabor" class="form-control" th:field="*{sabor}">
 				<option value="">Selecione sabor</option>
 				<option th:each="sabor : ${sabores}" th:value="${sabor}">[[${sabor.descricao}]]</option>
 			</select>
@@ -69,7 +69,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 		<div class="col-sm-3 form-group">
 			<label for="teorAlcoolico">Teor alcoólico</label>
 			<div class="input-group">
-				<input id="teorAlcoolico" type="text" class="form-control js-decimal">
+				<input id="teorAlcoolico" type="text" class="form-control js-decimal" th:field="*{teorAlcoolico}">
 				<span class="input-group-addon">%</span>
 			</div>
 		</div>
@@ -79,7 +79,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 			<div>
 				<th:block th:each="origem : ${origens}">
 					<div class="radio radio-inline">
-						<input th:id="|id_${origem}|" type="radio" th:value="${origem}" name="origem" >
+						<input th:id="|id_${origem}|" type="radio" th:value="${origem}" th:field="*{origem}" >
 						<label th:for="|id_${origem}|">[[${origem.descricao}]]</label>
 					</div>				
 				</th:block>
@@ -89,24 +89,24 @@ layout:decorate="~{layout/LayoutPadrao}">
 	
 	<div class="row">
 		<div class="col-sm-3 form-group">
-			<label for="preco">Preço</label>
+			<label for="valor">Valor</label>
 			<div class="input-group">
 				<span class="input-group-addon">R$</span>
-				<input id="preco" type="text" class="form-control js-decimal">				
+				<input id="valor" type="text" class="form-control js-decimal" th:field="*{valor}">				
 			</div>
 		</div>
 		
 		<div class="col-sm-3 form-group">
 			<label for="comissao">Comissão</label>
 			<div class="input-group">				
-				<input id="comissao" type="text" class="form-control js-decimal">	
+				<input id="comissao" type="text" class="form-control js-decimal" th:field="*{comissao}">	
 				<span class="input-group-addon">%</span>			
 			</div>
 		</div>
 		
 		<div class="col-sm-3 form-group">
 			<label for="estoque">Estoque</label>
-			<input id="estoque" type="text" class="form-control js-plain">
+			<input id="estoque" type="text" class="form-control js-plain" th:field="*{quantidadeEstoque}">
 		</div>
 		
 	

@@ -13,8 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.NumberFormat;
 
 import brewer.validation.SKU;
 
@@ -37,22 +42,37 @@ public class Cerveja implements Serializable{
 	@Size(min = 1, max = 50, message = "O tamanho da descriçao deve esta entre 1 e 50")
 	private String descricao;
 	
+	@NotNull(message = "O valor é obrigatório")
+	@DecimalMax(value = "9999.99", message = "O valor deve ser menor que R$ 9.999,99")
+	@NumberFormat(pattern = "##,##0.00")
 	private BigDecimal valor;
 	
+	@NotNull(message = "O teor alcoolico é obrigatório")
+	@DecimalMax(value = "100", message = "O teor alcoolico deve ser menor que 100")
+	@NumberFormat(pattern = "##,##0.00")
 	@Column(name = "teor_alcoolico")
 	private BigDecimal teorAlcoolico;
 	
+	@NotNull(message = "A comissao é obrigatório")
+	@DecimalMax(value = "100.0", message = "A comissao deve ser menor ou igual que 100")
+	@NumberFormat(pattern = "##,##0.00")
 	private BigDecimal comissao;
 	
+	@NotNull(message = "A quantidade em Estoque é obrigatório")
+	@Max(value = 9999, message = "O estoque debe ser menor que 9.999")
+	@NumberFormat(pattern = "#,##0")
 	@Column(name = "quantidade_estoque")
 	private Integer quantidadeEstoque;
 	
+	@NotNull(message = "O origem é obrigatório")
 	@Enumerated(EnumType.STRING)
 	private Origem origem;
 	
+	@NotNull(message = "O sabor é obrigatório")
 	@Enumerated(EnumType.STRING)
 	private Sabor sabor;
 	
+	@NotNull(message = "O estilo é obrigatório")
 	@ManyToOne
 	@JoinColumn(name = "codigo_estilo")	
 	private Estilo estilo;

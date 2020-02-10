@@ -27,8 +27,8 @@ layout:decorate="~{layout/LayoutPadrao}">
 	<th:block th:include="fragments/MessagensErroValidacao"></th:block>
 	
 	<div class="row">		
-		<div class="col-sm-2 form-group">
-			<label for="sku">SKU</label>
+		<div class="col-sm-2 form-group" th:classappend="${#fields.hasErrors('sku')} ? has-error">
+			<label for="sku" class="control-label">SKU</label>
 			<input id="sku" type="text" th:field="*{sku}" class="form-control">
 		</div>
 		

@@ -39,17 +39,17 @@ public class Cerveja implements Serializable{
 	@NotBlank(message = "Nome é obrigatório")
 	private String nome;
 	
-	@Size(min = 1, max = 50, message = "O tamanho da descriçao deve esta entre 1 e 50")
+	@Size(min = 1, max = 50, message = "O tamanho da descriçao deve estar entre 1 e 50")
 	private String descricao;
 	
 	@NotNull(message = "O valor é obrigatório")
 	@DecimalMax(value = "9999.99", message = "O valor deve ser menor que R$ 9.999,99")
-	@NumberFormat(pattern = "##,##0.00")
+	@NumberFormat(pattern = "#,##0.00")
 	private BigDecimal valor;
 	
 	@NotNull(message = "O teor alcoolico é obrigatório")
 	@DecimalMax(value = "100", message = "O teor alcoolico deve ser menor que 100")
-	@NumberFormat(pattern = "##,##0.00")
+	@NumberFormat(pattern = "#,##0.00")
 	@Column(name = "teor_alcoolico")
 	private BigDecimal teorAlcoolico;
 	

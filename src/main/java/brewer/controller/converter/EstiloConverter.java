@@ -8,6 +8,8 @@ public class EstiloConverter implements Converter<String, Estilo> {
 
 	@Override
 	public Estilo convert(String codigo) {
+		
+		System.out.println("llamando converter");
 		Estilo estilo = new Estilo();
 		estilo.setCodigo(Long.valueOf(codigo));		
 		return estilo;

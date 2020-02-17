@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<div class="alert alert-danger alert-dismissible" th:if="${#fields.hasAnyErrors()}">
+<div class="alert alert-danger alert-dismissible" th:if="${#fields.hasAnyErrors()}" th:fragment="alert">
 	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 	<th:block th:each="erro : ${#fields.detailedErrors()}">
 		<div><i class="fa fa-exclamation-circle"></i> [[${erro.message}]]</div>

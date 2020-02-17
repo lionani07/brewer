@@ -5,6 +5,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 
 <head>
 	<title>Cadastro de cervejas</title>
+	<link rel="stylesheet" th:href="@{/stylesheets/vendors/uikit.min.css}">	
 </head>
 
 <body>
@@ -20,11 +21,10 @@ layout:decorate="~{layout/LayoutPadrao}">
 
 <div class="container-fluid">
 
-	<th:block th:include="fragments/MessageSuccess"></th:block>
-
+<div th:replace="fragments/MessageSuccess :: alert"></div>
 <form method="post" th:object="${cerveja}" class="form-vertical">
 	
-	<th:block th:include="fragments/MessagensErroValidacao"></th:block>
+	<div th:replace="fragments/MessagensErroValidacao :: alert"></div>
 	
 	<div class="row">		
 		<div class="col-sm-2 form-group" th:classappend="${#fields.hasErrors('sku')} ? has-error">
@@ -108,8 +108,21 @@ layout:decorate="~{layout/LayoutPadrao}">
 			<label for="estoque" class="control-label">Estoque</label>
 			<input id="estoque" type="text" class="form-control js-plain" th:field="*{quantidadeEstoque}">
 		</div>
-		
+	</div>
 	
+	<div class="row col-sm-12">
+		<label class="control-label">Foto</label>
+		<div>
+			<div class="js-upload uk-placeholder uk-text-center">
+			    <span uk-icon="icon: cloud-upload"></span>
+			    <span class="uk-text-middle">Attach binaries by dropping them here or</span>
+			    <div uk-form-custom>
+			        <input type="file" multiple>
+			        <span class="uk-link">selecting one</span>
+			    </div>
+			</div>
+			<progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
+		</div>
 	</div>
 	
 	<input class="btn btn-primary" type="submit" value="Salvar">
@@ -122,6 +135,74 @@ layout:decorate="~{layout/LayoutPadrao}">
 
 <th:block layout:fragment="js-extra">
 	<script th:src="@{/javascripts/estilo.cadastro-rapido.js}"></script>
+	<script th:src="@{/javascripts/vendors/uikit.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/uikit-icons.min.js}"></script>
+	
+	<script>
+
+    var bar = document.getElementById('js-progressbar');
+
+    UIkit.upload('.js-upload', {
+
+        url: '/fotos',
+        multiple: false,
+        type: "POST",
+
+        beforeSend: function (environment) {
+            console.log('beforeSend', arguments);
+
+            // The environment object can still be modified here. 
+            // var {data, method, headers, xhr, responseType} = environment;
+
+        },
+        beforeAll: function () {
+            console.log('beforeAll', arguments);
+        },
+        load: function () {
+            console.log('load', arguments);
+        },
+        error: function () {
+            console.log('error', arguments);
+        },
+        complete: function () {
+            console.log('complete', arguments);
+        },
+
+        loadStart: function (e) {
+            console.log('loadStart', arguments);
+
+            bar.removeAttribute('hidden');
+            bar.max = e.total;
+            bar.value = e.loaded;
+        },
+
+        progress: function (e) {
+            console.log('progress', arguments);
+
+            bar.max = e.total;
+            bar.value = e.loaded;
+        },
+
+        loadEnd: function (e) {
+            console.log('loadEnd', arguments);
+
+            bar.max = e.total;
+            bar.value = e.loaded;
+        },
+
+        completeAll: function () {
+            console.log('completeAll', arguments);
+
+            setTimeout(function () {
+                bar.setAttribute('hidden', 'hidden');
+            }, 1000);
+
+            alert('Upload Completed');
+        }
+
+    });
+    </script>
+	
 </th:block>
 
 </body>

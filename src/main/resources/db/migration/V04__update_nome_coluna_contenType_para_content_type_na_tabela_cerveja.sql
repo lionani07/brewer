@@ -1,0 +1,1 @@
+ALTER TABLE cerveja CHANGE contentType content_type varchar(100);

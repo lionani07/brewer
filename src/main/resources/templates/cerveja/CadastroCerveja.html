@@ -111,17 +111,18 @@ layout:decorate="~{layout/LayoutPadrao}">
 	</div>
 	
 	<div class="row col-sm-12">
+		<input type="hidden" th:field="*{foto}">
+		<input type="hidden" th:field="*{contentType}">		
 		<label class="control-label">Foto</label>
 		<div>
 			<div class="js-upload uk-placeholder uk-text-center">
 			    <span uk-icon="icon: cloud-upload"></span>
-			    <span class="uk-text-middle">Attach binaries by dropping them here or</span>
+			    <span class="uk-text-middle">Arrastre a foto aqui ou</span>
 			    <div uk-form-custom>
 			        <input type="file" multiple>
-			        <span class="uk-link">selecting one</span>
+			        <span class="uk-link">selecione</span>
 			    </div>
-			</div>
-			<progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
+			</div>			
 		</div>
 	</div>
 	
@@ -146,58 +147,13 @@ layout:decorate="~{layout/LayoutPadrao}">
 
         url: '/fotos',
         multiple: false,
-        type: "POST",
-
-        beforeSend: function (environment) {
-            console.log('beforeSend', arguments);
-
-            // The environment object can still be modified here. 
-            // var {data, method, headers, xhr, responseType} = environment;
-
-        },
-        beforeAll: function () {
-            console.log('beforeAll', arguments);
-        },
-        load: function () {
-            console.log('load', arguments);
-        },
-        error: function () {
-            console.log('error', arguments);
-        },
-        complete: function () {
-            console.log('complete', arguments);
-        },
-
-        loadStart: function (e) {
-            console.log('loadStart', arguments);
-
-            bar.removeAttribute('hidden');
-            bar.max = e.total;
-            bar.value = e.loaded;
-        },
-
-        progress: function (e) {
-            console.log('progress', arguments);
-
-            bar.max = e.total;
-            bar.value = e.loaded;
-        },
-
-        loadEnd: function (e) {
-            console.log('loadEnd', arguments);
-
-            bar.max = e.total;
-            bar.value = e.loaded;
-        },
-
-        completeAll: function () {
-            console.log('completeAll', arguments);
-
-            setTimeout(function () {
-                bar.setAttribute('hidden', 'hidden');
-            }, 1000);
-
-            alert('Upload Completed');
+        type: "json",
+        method: "POST",
+        allow: "*.(jpg|jpeg|png)",
+        complete: function(response){
+        	console.log("complete ",response);
+        	$("input[name=foto]").val(response.response.foto);
+        	$("input[name=contentType]").val(response.response.contentType);
         }
 
     });

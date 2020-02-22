@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,26 +47,23 @@ public class FotoStorageLocal implements FotoStorage {
 	}
 
 	@Override
-	public void salvarFotoTemporariamente(MultipartFile[] files) {		
-		System.out.println("Salvando foto temporariamente...");		
-	}
-
-	public Path getLocal() {
-		return local;
-	}
-
-	public void setLocal(Path local) {
-		this.local = local;
-	}
-
-	public Path getLocalTemporario() {
-		return localTemporario;
-	}
-
-	public void setLocalTemporario(Path localTemporario) {
-		this.localTemporario = localTemporario;
+	public String salvarFotoTemporariamente(MultipartFile[] files) {
+		MultipartFile arquivo = files[0];
+		String nomeArquivo = null;
+		if(!arquivo.isEmpty()) {
+			try {
+				nomeArquivo = renomarArquivo(arquivo.getOriginalFilename());
+				arquivo.transferTo(this.localTemporario.resolve(nomeArquivo));
+			}  catch (IOException e) {				
+				throw new RuntimeException("Error ao salvar a foto temporariemnte", e);
+			}
+		}
+		return nomeArquivo;
 	}
 	
-	
+	private String renomarArquivo(String nomeOriginal) {
+		return UUID.randomUUID() + "_" + nomeOriginal;
+	}
+
 
 }

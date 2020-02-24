@@ -110,11 +110,11 @@ layout:decorate="~{layout/LayoutPadrao}">
 		</div>
 	</div>
 	
-	<div class="row col-sm-12">
+	<div class="row col-sm-12">		
 		<input type="hidden" th:field="*{foto}">
 		<input type="hidden" th:field="*{contentType}">		
 		<label class="control-label">Foto</label>
-		<div>
+		<div class="js-foto-cerveja">
 			<div class="js-upload uk-placeholder uk-text-center">
 			    <span uk-icon="icon: cloud-upload"></span>
 			    <span class="uk-text-middle">Arrastre a foto aqui ou</span>
@@ -122,7 +122,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 			        <input type="file" multiple>
 			        <span class="uk-link">selecione</span>
 			    </div>
-			</div>			
+			</div>					
 		</div>
 	</div>
 	
@@ -131,6 +131,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 </div>
 
 <div th:replace="estilo/CadastroRapidoEstilo :: modal"></div>
+<th:block th:replace="hbs/foto-cerveja"></th:block>	
 
 </section>
 
@@ -138,11 +139,10 @@ layout:decorate="~{layout/LayoutPadrao}">
 	<script th:src="@{/javascripts/estilo.cadastro-rapido.js}"></script>
 	<script th:src="@{/javascripts/vendors/uikit.min.js}"></script>
 	<script th:src="@{/javascripts/vendors/uikit-icons.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/handlebars.js}"></script>
 	
 	<script>
-
-    var bar = document.getElementById('js-progressbar');
-
+	
     UIkit.upload('.js-upload', {
 
         url: '/fotos',
@@ -150,12 +150,27 @@ layout:decorate="~{layout/LayoutPadrao}">
         type: "json",
         method: "POST",
         allow: "*.(jpg|jpeg|png)",
-        complete: function(response){
-        	console.log("complete ",response);
-        	$("input[name=foto]").val(response.response.foto);
-        	$("input[name=contentType]").val(response.response.contentType);
+        complete: function(response){ 
+        	var inputFoto = $("input[name=foto]");
+        	var inputContentType = $("input[name=contentType]");
+        	var nomeFoto = response.response.foto
+        	
+        	inputFoto.val(nomeFoto);
+        	inputContentType.val(response.response.contentType);
+        	
+        	var hbsHtmlFotoCerveja = $("#hbs-template-foto-cerveja").html();
+        	var template = Handlebars.compile(hbsHtmlFotoCerveja);
+        	var html = template({nome: nomeFoto});
+        	$(".js-foto-cerveja").append(html);
+        	$(".js-foto-cerveja").find(".js-upload").addClass("hide");
+        	
+        	$(".js-remove-foto").on("click", function(){
+        		$("#hbs-html-foto-cerveja").remove();
+        		inputFoto.val("");
+        		inputContentType.val("");
+        		$(".js-foto-cerveja").find(".js-upload").removeClass("hide");        		
+        	});        	
         }
-
     });
     </script>
 	

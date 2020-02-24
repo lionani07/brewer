@@ -26,7 +26,7 @@ public class FotosController {
 		
 		DeferredResult<FotoDTO> resultado = new DeferredResult<>();
 		
-		Thread thread = new Thread(new FotoStorageRunnable(files, resultado, fotoStorage));
+		Thread thread = new Thread(new FotoStorageRunnable(files, resultado, this.fotoStorage));
 		thread.start();
 		
 		return resultado;
@@ -34,7 +34,7 @@ public class FotosController {
 	
 	@GetMapping("/temp/{nome:.*}")
 	public byte[] recuperarFotoTemporaria(@PathVariable String nome) {
-		return fotoStorage.recuperarFotoTemporaria(nome);		
+		return this.fotoStorage.recuperarFotoTemporaria(nome);		
 	}
 
 }

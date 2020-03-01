@@ -114,7 +114,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 		<input type="hidden" th:field="*{foto}">
 		<input type="hidden" th:field="*{contentType}">		
 		<label class="control-label">Foto</label>
-		<div class="js-foto-cerveja">
+		<div class="js-foto-cerveja" th:attr="data-url-foto=@{/fotos}">
 			<div class="js-upload uk-placeholder uk-text-center">
 			    <span uk-icon="icon: cloud-upload"></span>
 			    <span class="uk-text-middle">Arrastre a foto aqui ou</span>
@@ -140,40 +140,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 	<script th:src="@{/javascripts/vendors/uikit.min.js}"></script>
 	<script th:src="@{/javascripts/vendors/uikit-icons.min.js}"></script>
 	<script th:src="@{/javascripts/vendors/handlebars.js}"></script>
-	
-	<script>
-	
-    UIkit.upload('.js-upload', {
-
-        url: '/fotos',
-        multiple: false,
-        type: "json",
-        method: "POST",
-        allow: "*.(jpg|jpeg|png)",
-        complete: function(response){ 
-        	var inputFoto = $("input[name=foto]");
-        	var inputContentType = $("input[name=contentType]");
-        	var nomeFoto = response.response.foto
-        	
-        	inputFoto.val(nomeFoto);
-        	inputContentType.val(response.response.contentType);
-        	
-        	var hbsHtmlFotoCerveja = $("#hbs-template-foto-cerveja").html();
-        	var template = Handlebars.compile(hbsHtmlFotoCerveja);
-        	var html = template({nome: nomeFoto});
-        	$(".js-foto-cerveja").append(html);
-        	$(".js-foto-cerveja").find(".js-upload").addClass("hide");
-        	
-        	$(".js-remove-foto").on("click", function(){
-        		$("#hbs-html-foto-cerveja").remove();
-        		inputFoto.val("");
-        		inputContentType.val("");
-        		$(".js-foto-cerveja").find(".js-upload").removeClass("hide");        		
-        	});        	
-        }
-    });
-    </script>
-	
+	<script th:src="@{/javascripts/hbs-foto-cerveja.js}"></script>	
 </th:block>
 
 </body>

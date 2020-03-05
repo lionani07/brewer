@@ -17,12 +17,23 @@ Brewer.UploadFoto = (function(){
             type: "json",
             method: "POST",
             allow: "*.(jpg|jpeg|png)",
-            complete: onComplete.bind(this),
-        }        
+            complete: onUploadFoto.bind(this),
+        }
+
         UIkit.upload('.js-upload', settings);
+
+        if(this.inputFoto.val()){
+           	var response = {};
+			response.response = {
+				foto: this.inputFoto.val(),
+				contentType: this.inputContentType.val() 
+			 };         
+            onUploadFoto.call(this, (response));
+        }
+        
     }
 
-    function onComplete(response){
+    function onUploadFoto(response){
         var nomeFoto = response.response.foto;
         var contentType = response.response.contentType;
         this.inputFoto.val(nomeFoto);

@@ -1,0 +1,3 @@
+.bw-required > .control-label:after{
+	content: "*";
+}

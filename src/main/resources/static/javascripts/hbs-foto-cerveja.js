@@ -28,7 +28,7 @@ Brewer.UploadFoto = (function(){
 				foto: this.inputFoto.val(),
 				contentType: this.inputContentType.val() 
 			 };         
-            onUploadFoto.call(this, (response));
+            onUploadFoto.call(this, response);
         }
         
     }

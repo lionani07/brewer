@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import brewer.model.Cerveja;
 import brewer.model.Origem;
 import brewer.model.Sabor;
+import brewer.repository.Cervejas;
 import brewer.repository.Estilos;
 import brewer.service.CadastroCervejaService;
 
@@ -28,6 +29,9 @@ public class CervejasController {
 	@Autowired
 	private CadastroCervejaService cadastroCervejaService;
 	
+	@Autowired
+	private Cervejas cervejas;
+	
 	@GetMapping("/novo")
 	public ModelAndView novo(Cerveja cerveja) {
 		ModelAndView mv = new ModelAndView("cerveja/CadastroCerveja");
@@ -38,15 +42,23 @@ public class CervejasController {
 	}
 	
 	@PostMapping("/novo")
-	public ModelAndView salvar(@Valid Cerveja cerveja, BindingResult result, Model model, RedirectAttributes attributes) {		
-		
+	public ModelAndView salvar(@Valid Cerveja cerveja, BindingResult result, Model model, RedirectAttributes attributes) {
 		if(result.hasErrors()) {
 			return novo(cerveja);
-		}
-		
+		}		
 		cadastroCervejaService.salvar(cerveja);
 		attributes.addFlashAttribute("msgSuccess", "Cerveja cadastrada com succeso!");
 		return new ModelAndView("redirect:/cervejas/novo");
+	}
+	
+	@GetMapping
+	public ModelAndView pesquisar() {
+		ModelAndView mv = new ModelAndView("cerveja/PesquisaCerveja");
+		mv.addObject("estilos", estilos.findAll());
+		mv.addObject("sabores", Sabor.values());
+		mv.addObject("origens", Origem.values());	
+		mv.addObject("cervejas", cervejas.findAll());
+		return mv;
 	}
 	
 }

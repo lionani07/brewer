@@ -107,7 +107,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 	<tbody>
 		<tr th:each="cerveja : ${cervejas}">
 			<td class="text-center">
-				<img th:src="@{/fotos/temp/{foto}(foto=${cerveja.foto})}" class="img-responsive">
+				<img th:src="@{/fotos/thumbnail.{foto}(foto=${cerveja.fotoOrMock})}" class="img-responsive">
 			</td>
 			<td>[[${cerveja.sku}]]</td>
 			<td>[[${cerveja.nome}]]</td>
@@ -118,6 +118,9 @@ layout:decorate="~{layout/LayoutPadrao}">
 				<a class="btn btn-link btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
 				<a class="btn btn-link btn-xs" title="Excluir"><i class="fa fa-trash"></i></a>
 			</td>
+		</tr>
+		<tr th:if="${#lists.isEmpty(cervejas)}">
+			<td colspan="7">Nehuma cerveja encontrada</td>
 		</tr>
 	</tbody>
 

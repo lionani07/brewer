@@ -17,6 +17,7 @@ import brewer.model.Origem;
 import brewer.model.Sabor;
 import brewer.repository.Cervejas;
 import brewer.repository.Estilos;
+import brewer.repository.filter.CervejaFilter;
 import brewer.service.CadastroCervejaService;
 
 @Controller
@@ -52,12 +53,12 @@ public class CervejasController {
 	}
 	
 	@GetMapping
-	public ModelAndView pesquisar() {
+	public ModelAndView pesquisar(CervejaFilter cervejaFilter) {
 		ModelAndView mv = new ModelAndView("cerveja/PesquisaCerveja");
 		mv.addObject("estilos", estilos.findAll());
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("origens", Origem.values());	
-		mv.addObject("cervejas", cervejas.findAll());
+		mv.addObject("cervejas", cervejas.filtrar(cervejaFilter));
 		return mv;
 	}
 	

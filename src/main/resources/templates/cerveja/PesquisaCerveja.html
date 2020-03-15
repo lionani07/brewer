@@ -29,15 +29,15 @@ layout:decorate="~{layout/LayoutPadrao}">
 </div>
 
 <div class="container-fluid">
-<form action="">
+<form th:object="${cervejaFilter}">
 	<div class="row">
 		<div class="col-sm-6 form-group">
 			<label for="sku" class="control-label">Sku</label>
-			<input type="text" id="sku" class="form-control">
+			<input type="text" id="sku" class="form-control" th:field="*{sku}">
 		</div>
 		<div class="col-sm-6 form-group">
 			<label for="nome" class="control-label">Nome</label>
-			<input type="text" id="nome" class="form-control">
+			<input type="text" id="nome" class="form-control" th:field="*{nome}">
 		</div>
 	
 	</div>
@@ -45,14 +45,14 @@ layout:decorate="~{layout/LayoutPadrao}">
 	<div class="row">
 		<div class="col-sm-6 form-group">
 			<label for="estilo" class="control-label">Estilo</label>
-			<select id="estilo" class="form-control" >
+			<select id="estilo" class="form-control" th:field="*{estilo}">
 				<option value="">Todos os etilos</option>
 				<option th:each="estilo : ${estilos}" th:value="${estilo.codigo}">[[${estilo.nome}]]</option>
 			</select>
 		</div>
 		<div class="col-sm-6 form-group">
 			<label for="sabor" class="control-label">Sabor</label>
-			<select id="sabor" class="form-control">
+			<select id="sabor" class="form-control" th:field="*{sabor}">
 				<option value="">Todos os sabores</option>
 				<option th:each="sabor : ${sabores}" th:value="${sabor}">[[${sabor.descricao}]]</option>
 			</select>
@@ -66,23 +66,23 @@ layout:decorate="~{layout/LayoutPadrao}">
 			<div>
 				<th:block th:each="origem : ${origens}">
 					<div class="radio radio-inline">
-						<input type="radio" th:value="${origem}" th:id="|id_${origem}|" name="origem">
+						<input type="radio" th:value="${origem}" th:id="|id_${origem}|" th:field="*{origem}">
 						<label th:for="|id_${origem}|">[[${origem.descricao}]]</label>
 					</div>
 				</th:block>
 				<div class="radio radio-inline">
-					<input type="radio" value="" th:checked="${origem} == null" name="origem">
+					<input type="radio" value="" th:checked="*{origem} == null" name="origem">
 					<label>Todas</label>
 				</div>
 			</div>
 		</div>
 		
 		<div class="col-sm-6 form-group">
-			<label for="precoDe">Preço unitário</label>
+			<label for="valorDe">Valor unitário</label>
 			<div class="form-inline">
-				<input type="text" class="form-control  aw-form-control-inline-sm  js-decimal" id="precoDe"/>
-				<label for="precoAte" class="aw-form-label-between">até</label>
-				<input type="text" class="form-control  aw-form-control-inline-sm  js-decimal" id="precoAte"/>
+				<input type="text" class="form-control  aw-form-control-inline-sm  js-decimal" id="valorDe" th:field="*{valorDe}"/>
+				<label for="valorAte" class="aw-form-label-between">até</label>
+				<input type="text" class="form-control  aw-form-control-inline-sm  js-decimal" id="valorAte" th:field="*{valorAte}"/>
 			</div>
 		</div>
 	

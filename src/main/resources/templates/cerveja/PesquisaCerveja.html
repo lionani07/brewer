@@ -87,7 +87,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 		</div>
 	
 	</div>
-
+	
 	<input type="submit" class="btn btn-primary" value="Pesquisar">
 </form>
 
@@ -105,7 +105,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 		</tr>
 	</thead>
 	<tbody>
-		<tr th:each="cerveja : ${cervejas}">
+		<tr th:each="cerveja : ${pagina.content}">
 			<td class="text-center">
 				<img th:src="@{/fotos/thumbnail.{foto}(foto=${cerveja.fotoOrMock})}" class="img-responsive">
 			</td>
@@ -119,25 +119,25 @@ layout:decorate="~{layout/LayoutPadrao}">
 				<a class="btn btn-link btn-xs" title="Excluir"><i class="fa fa-trash"></i></a>
 			</td>
 		</tr>
-		<tr th:if="${#lists.isEmpty(cervejas)}">
+		<tr th:if="${#lists.isEmpty(pagina.content)}">
 			<td colspan="7">Nehuma cerveja encontrada</td>
 		</tr>
 	</tbody>
 </table>
 </div>
 
-<div class="row col-sm-12 text-center">
+<div class="row col-sm-12 text-center" th:if="${not #lists.isEmpty(pagina.content)}">
 <nav>
   <ul class="pagination pagination-sm">
     <li class="page-item disabled"><a class="page-link" href="#" ><span>&laquo;</span></a></li>
-    <li class="page-item"><a class="page-link" href="?page=0">1</a></li>
-    <li class="page-item active"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
+   	<th:block th:each="p : ${#numbers.sequence(1, pagina.totalPages)}">
+   		<li class="page-item"><a class="page-link" th:href="|?page=${p-1}|">[[${p}]]</a></li>
+   	</th:block> 
     <li class="page-item"><a class="page-link" href="#"><span>&raquo;</span></a></li>
   </ul>
 </nav>
 </div>
-
+	
 </div>
 </section>
 </body>

@@ -48,7 +48,7 @@ public class CervejasImpl implements CervejasQueries {
 				criteria.add(Restrictions.eq("sku", filtro.getSku()));
 			}
 			if(!StringUtils.isEmpty(filtro.getNome())) {
-				criteria.add(Restrictions.ilike("nome", filtro.getSku(), MatchMode.ANYWHERE));
+				criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
 			}
 			if(isEstiloFilter(filtro)) {
 				criteria.add(Restrictions.eq("estilo", filtro.getEstilo()));

@@ -62,7 +62,8 @@ public class CervejasController {
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("origens", Origem.values());
 		
-		Page<Cerveja> pagina = cervejas.filtrar(cervejaFilter, pageable);		
+		Page<Cerveja> pagina = cervejas.filtrar(cervejaFilter, pageable);	
+		
 		mv.addObject("pagina", pagina);		
 		return mv;
 	}

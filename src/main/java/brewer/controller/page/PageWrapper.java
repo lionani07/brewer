@@ -1,10 +1,13 @@
 package brewer.controller.page;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -44,6 +47,36 @@ public class PageWrapper<T> {
 	
 	public String urlParaPagina(int pagina) {
 		return this.uriBuilder.replaceQueryParam("page", pagina).build(true).encode().toUriString();
+	}
+	
+	public String urlOrdenada(String propiedade) {
+		UriComponentsBuilder uriBuilderOrder = UriComponentsBuilder
+				.fromUriString(this.uriBuilder.build(true).encode().toUriString());
+		
+		String valorSort = String.format("%s,%s", propiedade, inverterDirecaoOrder(propiedade));
+		
+		return uriBuilderOrder.replaceQueryParam("sort", valorSort).build(true).encode().toUriString();
+	}
+	
+	public String inverterDirecaoOrder(String propiedade) {
+		String direcaoOrder = "asc";
+		
+		Order order = Objects.isNull(page.getSort()) ? null : page.getSort().getOrderFor(propiedade);
+		
+		if (!Objects.isNull(order)) {
+			direcaoOrder = Sort.Direction.ASC.equals(order.getDirection()) ? "desc" : "asc";
+		}
+		
+		return direcaoOrder;		
+	}
+	
+	public boolean isDescendente(String propiedade) {
+		return inverterDirecaoOrder(propiedade).equals("asc");		
+	}
+	
+	public boolean isOrdenada(String propiedade) {
+		Order order = Objects.isNull(page.getSort()) ? null : page.getSort().getOrderFor(propiedade);
+		return Objects.isNull(order) ? false : true;
 	}
 	
 

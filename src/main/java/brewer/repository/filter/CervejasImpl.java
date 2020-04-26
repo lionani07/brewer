@@ -34,14 +34,12 @@ public class CervejasImpl implements CervejasQueries {
 		criteria.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
 		criteria.setMaxResults(pageable.getPageSize());
 		
-		Sort sort = pageable.getSort();
-		if (!Objects.isNull(sort)) {
-			Sort.Order sortOrder = sort.iterator().next();
-			String property = sortOrder.getProperty();			
-			criteria.addOrder(sortOrder.isAscending() ? Order.asc(property) : Order.desc(property));
+		Sort sort = pageable.getSort();		
+		if (!Objects.isNull(sort) && sort.iterator().hasNext()) {			
+			Sort.Order order = sort.iterator().next();				
+			String property = order.getProperty();
+			criteria.addOrder(order.isAscending() ? Order.asc(property) : Order.desc(property));					
 		}
-		
-		System.out.println(">>> " + sort);
 		
 		adicionarFiltro(filtro, criteria);
 		

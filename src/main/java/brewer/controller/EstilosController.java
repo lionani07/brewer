@@ -1,8 +1,11 @@
 package brewer.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,13 +19,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import brewer.controller.page.PageWrapper;
 import brewer.model.Estilo;
+import brewer.repository.Estilos;
+import brewer.repository.filter.EstiloFilter;
 import brewer.service.CadastroEstiloService;
 import brewer.service.exception.NomeEstiloJaCadastradoException;
 
 @Controller
 @RequestMapping("/estilos")
 public class EstilosController {
+	
+	@Autowired
+	private Estilos estilos;
 
 	@Autowired
 	private CadastroEstiloService cadastroEstiloService;
@@ -55,6 +64,15 @@ public class EstilosController {
 		}		
 		estilo = cadastroEstiloService.salvar(estilo);			
 		return ResponseEntity.ok(estilo);
+	}
+	
+	@GetMapping
+	public ModelAndView pesquisar(EstiloFilter estiloFilter, @PageableDefault(size = 2) Pageable pageable, HttpServletRequest httpServletRequest) {
+		ModelAndView mv = new ModelAndView("estilo/PesquisaEstilo");
+		
+		PageWrapper<Estilo> paginaWrapper = new PageWrapper<Estilo>(estilos.filtrar(estiloFilter, pageable), httpServletRequest);
+		mv.addObject("pagina", paginaWrapper);
+		return mv;
 	}
 
 }

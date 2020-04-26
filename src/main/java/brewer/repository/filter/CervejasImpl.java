@@ -1,16 +1,20 @@
 package brewer.repository.filter;
 
+import java.util.Objects;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -29,6 +33,16 @@ public class CervejasImpl implements CervejasQueries {
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cerveja.class);
 		criteria.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
 		criteria.setMaxResults(pageable.getPageSize());
+		
+		Sort sort = pageable.getSort();
+		if (!Objects.isNull(sort)) {
+			Sort.Order sortOrder = sort.iterator().next();
+			String property = sortOrder.getProperty();			
+			criteria.addOrder(sortOrder.isAscending() ? Order.asc(property) : Order.desc(property));
+		}
+		
+		System.out.println(">>> " + sort);
+		
 		adicionarFiltro(filtro, criteria);
 		
 		return new PageImpl<>(criteria.list(), pageable, totalFiltro(filtro));

@@ -77,9 +77,10 @@ layout:decorate="~{layout/LayoutPadrao}">
 			<input type="text" class="form-control js-cep">
 		</div>		
 		<div class="col-sm-4 form-group">
-			<label>Estado</label>	
+			<label>Estado</label>			
 			<select class="form-control">
-				<option>Estado</option>
+				<option value="">Selecione estado</option>
+				<option th:each="estado : ${estados}" th:value="${estado.codigo}">[[${estado.sigla}]]</option>
 			</select>
 		</div>
 		<div class="col-sm-4 form-group">

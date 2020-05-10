@@ -1,4 +1,4 @@
-var Brewer  = Brewer || {};
+var Brewer = Brewer || {};
 
 Brewer.MascaraCpfCnpj = (function() {
 	

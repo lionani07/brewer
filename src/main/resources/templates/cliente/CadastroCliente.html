@@ -74,7 +74,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 	<div class="row">	
 		<div class="col-sm-4 form-group">
 			<label>CEP</label>	
-			<input type="text" class="form-control">
+			<input type="text" class="form-control js-cep">
 		</div>		
 		<div class="col-sm-4 form-group">
 			<label>Estado</label>	
@@ -96,7 +96,8 @@ layout:decorate="~{layout/LayoutPadrao}">
 </section>
 
 <th:block layout:fragment="js-extra">
-	<script th:src="@{/javascripts/cliente.mascara-cpf-cnpj.js}"></script>		
+	<script th:src="@{/javascripts/cliente.mascara-cpf-cnpj.js}"></script>	
+	<script th:src="@{/javascripts/cliente.mascara-cep.js}"></script>	
 </th:block>
 
 </body>

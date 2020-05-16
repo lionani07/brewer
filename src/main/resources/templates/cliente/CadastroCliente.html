@@ -78,16 +78,21 @@ layout:decorate="~{layout/LayoutPadrao}">
 		</div>		
 		<div class="col-sm-4 form-group">
 			<label>Estado</label>			
-			<select class="form-control">
+			<select class="form-control" id="combo-estado">
 				<option value="">Selecione estado</option>
-				<option th:each="estado : ${estados}" th:value="${estado.codigo}">[[${estado.sigla}]]</option>
+				<option th:each="estado : ${estados}" th:value="${estado.codigo}">[[${estado.nome}]]</option>
 			</select>
 		</div>
 		<div class="col-sm-4 form-group">
-			<label>Cidade</label>	
-			<select class="form-control">
-				<option>Cidade</option>
-			</select>
+			<label>Cidade</label>
+			<div class="input-group">					
+				<select class="form-control" id="cidade" th:action="@{/cidades}">					
+				</select>
+				<span class="input-group-addon">
+					<img th:src="@{/images/mini-loading.gif}" class="js-img-loading hide">
+				</span>
+			</div>
+			
 		</div>
 	</div>
 	
@@ -99,6 +104,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 <th:block layout:fragment="js-extra">
 	<script th:src="@{/javascripts/cliente.mascara-cpf-cnpj.js}"></script>	
 	<script th:src="@{/javascripts/cliente.mascara-cep.js}"></script>	
+	<script th:src="@{/javascripts/cliente.combo-estado-cidade.js}"></script>
 </th:block>
 
 </body>

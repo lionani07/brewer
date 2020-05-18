@@ -17,76 +17,83 @@ layout:decorate="~{layout/LayoutPadrao}">
 </div>
 
 <div class="container-fluid">
+
+	<th:block th:replace="fragments/MessageSuccess :: alert"></th:block>
 	
-	<form action="">
+	<form method="post" th:object="${cliente}">
+	
+	<th:block th:replace="fragments/MessagensErroValidacao :: alert"></th:block>
+	
 	<div class="row">
-		<div class="col-sm-12 form-group">
-			<label for="nome">Nome</label>
-			<input id="nome" type="text" class="form-control">
+		<div class="col-sm-12 form-group bw-required" th:classappend="${#fields.hasErrors('nome')} ? has-error">
+			<label for="nome" class="control-label">Nome</label>
+			<input id="nome" type="text" class="form-control" th:field="*{nome}">
 		</div>
 	</div>
 	
 	<div class="row">
-		<div class="col-sm-4 form-group">
-			<label>Tipo pessoa</label>
+		<div class="col-sm-4 form-group bw-required" th:classappend="${#fields.hasErrors('tipoPessoa')} ? has-error">
+			<label class="control-label">Tipo pessoa</label>
 			<div>
 				<th:block th:each="tipoPessoa : ${tiposPessoa}">
 					<div class="radio radio-inline">
 						<input type="radio" th:id="|id_${tipoPessoa}|" name="tipoPessoa" class="js-radio-tipo-pessoa"
-						th:attr="data-documento=${tipoPessoa.documento}, data-mascara=${tipoPessoa.mascara}">
+						th:attr="data-documento=${tipoPessoa.documento}, data-mascara=${tipoPessoa.mascara}"
+						th:field="*{tipoPessoa}" th:value="${tipoPessoa}">
 						<label class="control-label" th:for="|id_${tipoPessoa}|">[[${tipoPessoa.descricao}]]</label>
 					</div>				
 				</th:block>				
 			</div>	
 		</div>
-		<div class="col-sm-8 form-group">
-			<label for="cpf-cnpj">CPF/CNPJ</label>	
-			<input id="cpf-cnpj" type="text" class="form-control" disabled>
+		<div class="col-sm-8 form-group bw-required" th:classappend="${#fields.hasErrors('cpfOuCnpj')} ? has-error">
+			<label for="cpf-cnpj" class="control-label">CPF/CNPJ</label>	
+			<input id="cpf-cnpj" type="text" class="form-control" disabled th:field="*{cpfOuCnpj}">
 		</div>
 	</div>
 	
 	<div class="row">	
 		<div class="col-sm-4 form-group">
 			<label>Telefone</label>	
-			<input id="telefone"  type="text" class="form-control js-phone-number">
+			<input id="telefone"  type="text" class="form-control js-phone-number" th:field="*{telefone}">
 		</div>		
-		<div class="col-sm-8 form-group">
-			<label>E-mail</label>	
-			<input id="email" type="text" class="form-control">
+		<div class="col-sm-8 form-group bw-required" th:classappend="${#fields.hasErrors('email')} ? has-error">
+			<label class="control-label">E-mail</label>	
+			<input id="email" type="text" class="form-control" th:field="*{email}">
 		</div>
 	</div>
 	
 	<div class="row">	
 		<div class="col-sm-4 form-group">
 			<label>Logradouro</label>	
-			<input type="text" class="form-control">
+			<input type="text" class="form-control" th:field="*{endereco.logradouro}">
 		</div>		
 		<div class="col-sm-4 form-group">
 			<label>Número</label>	
-			<input type="text" class="form-control">
+			<input type="text" class="form-control" th:field="*{endereco.numero}">
 		</div>
 		<div class="col-sm-4 form-group">
 			<label>Complemento</label>	
-			<input type="text" class="form-control">
+			<input type="text" class="form-control" th:field="*{endereco.complemento}">
 		</div>
 	</div>
 	
 	<div class="row">	
 		<div class="col-sm-4 form-group">
 			<label>CEP</label>	
-			<input type="text" class="form-control js-cep">
+			<input type="text" class="form-control js-cep" th:field="*{endereco.cep}">
 		</div>		
 		<div class="col-sm-4 form-group">
 			<label>Estado</label>			
-			<select class="form-control" id="combo-estado">
+			<select class="form-control" id="combo-estado" th:field="*{endereco.estado}">
 				<option value="">Selecione estado</option>
 				<option th:each="estado : ${estados}" th:value="${estado.codigo}">[[${estado.nome}]]</option>
 			</select>
 		</div>
 		<div class="col-sm-4 form-group">
 			<label>Cidade</label>
-			<div class="input-group">					
-				<select class="form-control" id="cidade" th:action="@{/cidades}">					
+			<div class="input-group">	
+				<input type="hidden" th:value="*{endereco.cidade != null} ? *{endereco.cidade.codigo}" id="inputHiddenCidadeSelecionada">				
+				<select class="form-control" id="cidade" th:action="@{/cidades}" th:field="*{endereco.cidade}">					
 				</select>
 				<span class="input-group-addon">
 					<img th:src="@{/images/mini-loading.gif}" class="js-img-loading hide">

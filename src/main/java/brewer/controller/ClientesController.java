@@ -13,15 +13,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import brewer.model.Cliente;
 import brewer.model.TipoPessoa;
-import brewer.repository.Clientes;
 import brewer.repository.Estados;
+import brewer.service.CadastroClienteService;
+import brewer.service.exception.CpfCnpjClienteJaCadastradoException;
 
 @Controller
 @RequestMapping("/clientes")
 public class ClientesController {
 	
 	@Autowired
-	private Clientes clientes;
+	private CadastroClienteService cadastroClienteService;
 	
 	@Autowired
 	private Estados estados;
@@ -40,7 +41,12 @@ public class ClientesController {
 			return novo(cliente);
 		}
 		
-		clientes.save(cliente);
+		try {
+			this.cadastroClienteService.salvar(cliente);
+		} catch (CpfCnpjClienteJaCadastradoException e) {
+			result.rejectValue("cpfOuCnpj", e.getMessage(), e.getMessage());
+			return novo(cliente);
+		}
 		attributes.addFlashAttribute("msgSuccess", "Cliente cadastrado com succeso");
 		return new ModelAndView("redirect:/clientes/novo");
 	}

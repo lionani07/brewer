@@ -13,11 +13,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import brewer.model.Cliente;
 import brewer.model.TipoPessoa;
+import brewer.repository.Clientes;
 import brewer.repository.Estados;
 
 @Controller
 @RequestMapping("/clientes")
 public class ClientesController {
+	
+	@Autowired
+	private Clientes clientes;
 	
 	@Autowired
 	private Estados estados;
@@ -35,7 +39,8 @@ public class ClientesController {
 		if (result.hasErrors()) {
 			return novo(cliente);
 		}
-		//TODO: Salvar e adicionar mensagem
+		
+		clientes.save(cliente);
 		attributes.addFlashAttribute("msgSuccess", "Cliente cadastrado com succeso");
 		return new ModelAndView("redirect:/clientes/novo");
 	}

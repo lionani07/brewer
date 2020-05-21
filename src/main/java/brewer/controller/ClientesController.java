@@ -1,8 +1,11 @@
 package brewer.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import brewer.controller.page.PageWrapper;
 import brewer.model.Cliente;
 import brewer.model.TipoPessoa;
+import brewer.repository.Clientes;
 import brewer.repository.Estados;
+import brewer.repository.filter.ClienteFilter;
 import brewer.service.CadastroClienteService;
 import brewer.service.exception.CpfCnpjClienteJaCadastradoException;
 
@@ -26,6 +32,9 @@ public class ClientesController {
 	
 	@Autowired
 	private Estados estados;
+	
+	@Autowired
+	private Clientes clientes;
 
 	@GetMapping("/novo")
 	public ModelAndView novo(Cliente cliente) {
@@ -51,4 +60,14 @@ public class ClientesController {
 		return new ModelAndView("redirect:/clientes/novo");
 	}
 	
+	@GetMapping
+	public ModelAndView pesquisar(ClienteFilter clienteFilter, @PageableDefault(size = 2) Pageable pageable, HttpServletRequest httpServletRequest) {
+		ModelAndView mv = new ModelAndView("cliente/PesquisaCliente");
+		
+		PageWrapper<Cliente> paginaWrapper = new PageWrapper<>(clientes.filtrar(clienteFilter, pageable), httpServletRequest);
+		mv.addObject("pagina", paginaWrapper);
+		
+		return mv;
+		
+	}
 }

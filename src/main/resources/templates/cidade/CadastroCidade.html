@@ -17,17 +17,22 @@ layout:decorate="~{layout/LayoutPadrao}">
 </div>
 
 <div class="container-fluid">
-	<form action="">
+
+	<th:block th:replace="fragments/MessageSuccess :: alert"></th:block>
+	<form method="post" th:object="${cidade}">	
+	<th:block th:replace="fragments/MessagensErroValidacao :: alert"></th:block>
+	
 	<div class="row">
-		<div class="col-sm-4 form-group">
-			<label>Estado</label>
-			<select class="form-control">
-				<option value="">Seleccione o estado</option>
+		<div class="col-sm-4 form-group bw-required" th:classappend="${#fields.hasErrors('estado')} ? has-error">
+			<label class="control-label">Estado</label>
+			<select class="form-control" th:field="*{estado}">
+				<option value="">Seleccione o estado</option>				 
+				<option th:each="estado : ${estados}" th:value="${estado.codigo}">[[${estado.nome}]]</option>			
 			</select>
 		</div>
-		<div class="col-sm-8 form-group">
-			<label>Nome</label>
-			<input type="text" class="form-control">
+		<div class="col-sm-8 form-group bw-required" th:classappend="${#fields.hasErrors('nome')} ? has-error">
+			<label class="control-label">Nome</label>
+			<input type="text" class="form-control" th:field="*{nome}">
 		</div>
 	</div>
 	

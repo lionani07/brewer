@@ -8,10 +8,11 @@ import brewer.storage.local.FotoStorageLocal;
 
 @Configuration
 public class ServiceConfig {
-	
+
 	@Bean
 	public FotoStorage fotoStorage() {
 		return new FotoStorageLocal();
-	}
+	}	
+	
 
 }

@@ -2,9 +2,13 @@ package brewer.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,9 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import brewer.controller.page.PageWrapper;
 import brewer.model.Cidade;
 import brewer.repository.Cidades;
 import brewer.repository.Estados;
+import brewer.repository.filter.CidadeFilter;
 import brewer.service.CadastroCidadeService;
 import brewer.service.exception.NomeCidadeJaCadastradoException;
 
@@ -55,6 +61,18 @@ public class CidadesController {
 		}
 		attributes.addFlashAttribute("msgSuccess", "Cidade Cadastrada com succeso");
 		return new ModelAndView("redirect:/cidades/nova");
+	}
+	
+	@GetMapping
+	public ModelAndView pesquisar(CidadeFilter cidadeFilter, @PageableDefault(size = 10) Pageable pageable, HttpServletRequest httpServletRequest) {
+		ModelAndView mv = new ModelAndView("cidade/PesquisaCidade");
+		mv.addObject("estados", estados.findAll());
+		
+		Page<Cidade> pageCidade = cidades.filtrar(cidadeFilter, pageable);
+		PageWrapper<Cidade> paginaWrapper = new PageWrapper<>(pageCidade, httpServletRequest);
+		
+		mv.addObject("pagina", paginaWrapper);
+		return mv;
 	}
 	
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

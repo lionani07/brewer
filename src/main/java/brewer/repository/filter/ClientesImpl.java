@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import brewer.model.Cliente;
+import brewer.model.TipoPessoa;
 import brewer.repository.helper.ClientesQueries;
 import brewer.repository.paginacao.PaginacaoUtil;
 
@@ -41,10 +42,13 @@ public class ClientesImpl implements ClientesQueries {
 	}
 	
 	private void adicionarFiltro(ClienteFilter filtro, Criteria criteria) {
-		if(!Objects.isNull(filtro)) {
+		if(Objects.nonNull(filtro)) {
 			if(!StringUtils.isEmpty(filtro.getNome())) {
 				criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
-			}			
+			}
+			if (!StringUtils.isEmpty(filtro.getCpfOuCnpj())) {
+				criteria.add(Restrictions.ilike("cpfOuCnpj", TipoPessoa.removerFormatacao(filtro.getCpfOuCnpj()), MatchMode.ANYWHERE));
+			}
 		}		
 	}
 	

@@ -46,26 +46,30 @@ layout:decorate="~{layout/LayoutPadrao}">
 	<input type="submit" class="btn btn-sm btn-primary" value="Pesquisar">
 	</form>
 	
-	<div class="table-responsive bw-tabela-simples">
+
+<div class="table-responsive">
 <table class="table table-hover">
 	<thead>
 		<tr>
-			<th class="table-cervejas-col-sku">
+			<th>
 				<th:block th:replace="fragments/Ordenacao :: order(${pagina}, 'nome', 'Nome')"></th:block>				
 			</th>
-			<th class="table-cervejas-col-nome">			
+			<th>			
 				<th:block th:replace="fragments/Ordenacao :: order(${pagina}, 'tipoPessoa', 'Tipo Pessoa')"></th:block>			
 			</th>
-			<th class="table-cervejas-col-estilo">CPF/CNPJ</th>
-			<th class="table-cervejas-col-origem">Telefone</th>			
+			<th>CPF/CNPJ</th>
+			<th>Telefone</th>
+			<th>Cidade/Estado</th>
+			<th></th>	
 		</tr>
 	</thead>
 	<tbody>
 		<tr th:each="cliente : ${pagina.conteudo}">			
 			<td>[[${cliente.nome}]]</td>
-			<td>[[${cliente.tipoPessoa}]]</td>
+			<td>[[${cliente.tipoPessoa.descricao}]]</td>
 			<td>[[${cliente.cpfOuCnpj}]]</td>
-			<td>[[${cliente.telefone}]]</td>			
+			<td>[[${cliente.telefone}]]</td>
+			<td>[[${cliente.endereco.cidadeAndEstado}]]</td>			
 			<td class="text-center">
 				<a class="btn btn-link btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
 				<a class="btn btn-link btn-xs" title="Excluir"><i class="fa fa-trash"></i></a>

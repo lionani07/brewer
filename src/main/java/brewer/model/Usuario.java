@@ -13,12 +13,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import brewer.validation.AtributoConfirmacao;
+
 @Entity
 @Table(name = "usuario")
+@AtributoConfirmacao(atributo = "senha", atributoConfirmacao = "confirmacaoSenha", message = "Confirmaçao de senha nao conferem")
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -35,6 +41,9 @@ public class Usuario implements Serializable {
 	
 	private String senha;
 	
+	@Transient
+	private String confirmacaoSenha;
+	
 	private Boolean ativo;
 	
 	@NotNull(message = "Seleccione pelo menos um grupo")
@@ -43,8 +52,8 @@ public class Usuario implements Serializable {
 				, inverseJoinColumns = @JoinColumn(name="codigo_grupo"))	
 	private List<Grupo> grupos;
 	
-	@NotNull(message = "Data de nascimento e obrigatorio")
 	@Column(name = "data_nascimento")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataNascimento;
 	
 	
@@ -104,6 +113,14 @@ public class Usuario implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
+	public String getConfirmacaoSenha() {
+		return confirmacaoSenha;
+	}
+	public void setConfirmacaoSenha(String confirmacaoSenha) {
+		this.confirmacaoSenha = confirmacaoSenha;
+	}
+	
 	public Boolean getAtivo() {
 		return ativo;
 	}

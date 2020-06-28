@@ -18,8 +18,9 @@ layout:decorate="~{layout/LayoutPadrao}">
 </div>
 
 <div class="container-fluid">
-	<form th:object="${usuario}" method="post">
-	
+
+	<th:block th:replace="fragments/MessageSuccess :: alert"></th:block>
+	<form th:object="${usuario}" method="post">	
 	<div th:replace="fragments/MessagensErroValidacao :: alert"></div>
 	
 		<div class="row">
@@ -37,8 +38,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 			<div class="col-sm-3 form-group input-group">
 				<label class="control-label" for="dataNascimento">Data de nascimento</label>
 				<div class="input-group">
-					<input id="dataNascimento" type="text" class="form-control js-date" th:field="*{dataNascimento}" autocomplete="off"
-					>
+					<input id="dataNascimento" type="text" class="form-control js-date" th:field="*{dataNascimento}" autocomplete="off">
 					<div class="input-group-addon">
 	        			<span class="glyphicon glyphicon-th"></span>
 	    			</div>
@@ -58,8 +58,8 @@ layout:decorate="~{layout/LayoutPadrao}">
 			<div class="form-group">
 				<label>Status</label>
 				<div>
-					<input type="checkbox" class="js-status"
-					data-size="normal" data-off-color="danger" data-on-text="Ativo" data-off-text="Inativo">
+					<input type="checkbox" class="js-status" data-size="small" data-off-color="danger" 
+					data-on-text="Ativo" data-off-text="Inativo" th:field="*{ativo}">
 				</div>
 			</div>
 		</div>

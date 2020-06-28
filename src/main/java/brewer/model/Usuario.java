@@ -46,12 +46,12 @@ public class Usuario implements Serializable {
 	
 	private Boolean ativo;
 	
-	@NotNull(message = "Seleccione pelo menos um grupo")
 	@ManyToMany
 	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name="codigo_usuario")
 				, inverseJoinColumns = @JoinColumn(name="codigo_grupo"))	
 	private List<Grupo> grupos;
 	
+	@NotNull(message = "Data nascimento e obrigatorio")
 	@Column(name = "data_nascimento")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataNascimento;

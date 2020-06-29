@@ -17,6 +17,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -46,6 +47,7 @@ public class Usuario implements Serializable {
 	
 	private Boolean ativo;
 	
+	@Size(min = 1, message = "Seleccione pelo menos um grupo")
 	@ManyToMany
 	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name="codigo_usuario")
 				, inverseJoinColumns = @JoinColumn(name="codigo_grupo"))	

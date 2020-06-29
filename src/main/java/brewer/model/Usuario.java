@@ -58,6 +58,10 @@ public class Usuario implements Serializable {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataNascimento;
 	
+	public boolean isNovo() {
+		return this.codigo == null;
+	}
+	
 	
 	@Override
 	public int hashCode() {

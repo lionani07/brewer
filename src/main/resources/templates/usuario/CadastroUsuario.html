@@ -47,8 +47,8 @@ layout:decorate="~{layout/LayoutPadrao}">
 		</div>
 		
 		<div class="row">
-			<div class="col-sm-3 form-group">
-				<label class="control-label" for="senha">Senha</label>
+			<div class="col-sm-3 form-group" th:classappend="${#fields.hasErrors('senha')} ? has-error">
+				<label class="control-label" for="senha">Senha<span th:if="${usuario.novo}">*</span></label>
 				<input id="senha" type="password" class="form-control" th:field="*{senha}">
 			</div>
 			<div class="col-sm-3 form-group" th:classappend="${#fields.hasErrors('confirmacaoSenha')} ? has-error">

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import brewer.model.Cidade;
 import brewer.model.Estado;
-import brewer.repository.helper.CidadesQueries;
+import brewer.repository.helper.cidades.CidadesQueries;
 
 public interface Cidades extends JpaRepository<Cidade, Long>, CidadesQueries {
 	

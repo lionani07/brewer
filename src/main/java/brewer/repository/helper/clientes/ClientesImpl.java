@@ -1,4 +1,4 @@
-package brewer.repository.filter;
+package brewer.repository.helper.clientes;
 
 import java.util.Objects;
 
@@ -17,11 +17,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import brewer.model.Estilo;
-import brewer.repository.helper.EstilosQueries;
+import brewer.model.Cliente;
+import brewer.model.TipoPessoa;
+import brewer.repository.filter.ClienteFilter;
 import brewer.repository.paginacao.PaginacaoUtil;
 
-public class EstilosImpl implements EstilosQueries {
+public class ClientesImpl implements ClientesQueries {
 	
 	@PersistenceContext
 	private EntityManager manager;
@@ -32,25 +33,28 @@ public class EstilosImpl implements EstilosQueries {
 	@Transactional(readOnly = true)
 	@SuppressWarnings({ "deprecation", "unchecked"})
 	@Override
-	public Page<Estilo> filtrar(EstiloFilter filtro, Pageable pageable) {
-		Criteria criteria = manager.unwrap(Session.class).createCriteria(Estilo.class);
+	public Page<Cliente> filtrar(ClienteFilter filtro, Pageable pageable) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cliente.class);
 		
 		paginacaoUtil.preparar(criteria, pageable);		
 		adicionarFiltro(filtro, criteria);		
 		return new PageImpl<>(criteria.list(), pageable, totalFiltro(filtro));
 	}
 	
-	private void adicionarFiltro(EstiloFilter filtro, Criteria criteria) {
-		if(!Objects.isNull(filtro)) {
+	private void adicionarFiltro(ClienteFilter filtro, Criteria criteria) {
+		if(Objects.nonNull(filtro)) {
 			if(!StringUtils.isEmpty(filtro.getNome())) {
 				criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
-			}			
+			}
+			if (!StringUtils.isEmpty(filtro.getCpfOuCnpj())) {
+				criteria.add(Restrictions.ilike("cpfOuCnpj", TipoPessoa.removerFormatacao(filtro.getCpfOuCnpj()), MatchMode.ANYWHERE));
+			}
 		}		
 	}
 	
 	@SuppressWarnings("deprecation")
-	private Long totalFiltro(EstiloFilter filtro) {
-		Criteria criteria = manager.unwrap(Session.class).createCriteria(Estilo.class);
+	private Long totalFiltro(ClienteFilter filtro) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cliente.class);
 		adicionarFiltro(filtro, criteria);
 		criteria.setProjection(Projections.rowCount());
 		return (Long) criteria.uniqueResult();

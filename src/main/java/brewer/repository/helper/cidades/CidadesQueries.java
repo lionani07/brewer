@@ -1,4 +1,4 @@
-package brewer.repository.helper;
+package brewer.repository.helper.cidades;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

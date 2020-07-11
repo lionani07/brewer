@@ -1,4 +1,4 @@
-package brewer.repository.filter;
+package brewer.repository.helper.cerveja;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import brewer.model.Cerveja;
-import brewer.repository.helper.CervejasQueries;
+import brewer.repository.filter.CervejaFilter;
 import brewer.repository.paginacao.PaginacaoUtil;
 
 public class CervejasImpl implements CervejasQueries {

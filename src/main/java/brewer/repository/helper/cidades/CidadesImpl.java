@@ -1,4 +1,4 @@
-package brewer.repository.filter;
+package brewer.repository.helper.cidades;
 
 import java.util.Objects;
 
@@ -17,12 +17,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import brewer.model.Cliente;
-import brewer.model.TipoPessoa;
-import brewer.repository.helper.ClientesQueries;
+import brewer.model.Cidade;
+import brewer.repository.filter.CidadeFilter;
 import brewer.repository.paginacao.PaginacaoUtil;
 
-public class ClientesImpl implements ClientesQueries {
+public class CidadesImpl implements CidadesQueries {
 	
 	@PersistenceContext
 	private EntityManager manager;
@@ -33,31 +32,37 @@ public class ClientesImpl implements ClientesQueries {
 	@Transactional(readOnly = true)
 	@SuppressWarnings({ "deprecation", "unchecked"})
 	@Override
-	public Page<Cliente> filtrar(ClienteFilter filtro, Pageable pageable) {
-		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cliente.class);
+	public Page<Cidade> filtrar(CidadeFilter filtro, Pageable pageable) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cidade.class);
 		
 		paginacaoUtil.preparar(criteria, pageable);		
 		adicionarFiltro(filtro, criteria);		
 		return new PageImpl<>(criteria.list(), pageable, totalFiltro(filtro));
 	}
 	
-	private void adicionarFiltro(ClienteFilter filtro, Criteria criteria) {
-		if(Objects.nonNull(filtro)) {
+	private void adicionarFiltro(CidadeFilter filtro, Criteria criteria) {
+		if(!Objects.isNull(filtro)) {			
+			if (isFilterEstado(filtro)) {
+				criteria.add(Restrictions.eq("estado", filtro.getEstado()));
+			}
+			
 			if(!StringUtils.isEmpty(filtro.getNome())) {
 				criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
-			}
-			if (!StringUtils.isEmpty(filtro.getCpfOuCnpj())) {
-				criteria.add(Restrictions.ilike("cpfOuCnpj", TipoPessoa.removerFormatacao(filtro.getCpfOuCnpj()), MatchMode.ANYWHERE));
-			}
+			}			
 		}		
 	}
 	
 	@SuppressWarnings("deprecation")
-	private Long totalFiltro(ClienteFilter filtro) {
-		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cliente.class);
+	private Long totalFiltro(CidadeFilter filtro) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cidade.class);
 		adicionarFiltro(filtro, criteria);
 		criteria.setProjection(Projections.rowCount());
 		return (Long) criteria.uniqueResult();
+	}
+	
+	
+	private boolean isFilterEstado(CidadeFilter filtro) {
+		return Objects.nonNull(filtro.getEstado()) && Objects.nonNull(filtro.getEstado().getCodigo());
 	}
 
 	

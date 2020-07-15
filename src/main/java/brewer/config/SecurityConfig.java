@@ -29,7 +29,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	}
 	
 	@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {		
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {	
 		auth.userDetailsService(userDetailsService).passwordEncoder(this.passwordEncoder);
     }
 	
@@ -45,8 +45,8 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/cidades/nova").hasRole("CADATRASTRAR_CIDADE")	
-				.antMatchers("/usuarios/**").hasRole("CADASTRAR_USUARIO")
+				.antMatchers("/cidades/nova").hasAnyAuthority("CADATRASTRAR_CIDADE")	
+				.antMatchers("/usuarios/**").hasAnyAuthority("CADASTRAR_USUARIO")
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()

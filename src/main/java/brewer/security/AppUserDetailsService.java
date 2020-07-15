@@ -1,9 +1,14 @@
 package brewer.security;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,7 +30,15 @@ public class AppUserDetailsService implements UserDetailsService {
 		Usuario usuario = optionalUsuario				
 				.orElseThrow(() -> new UsernameNotFoundException("Usuario e/ou senha incorretos"));
 		
-		return new User(usuario.getEmail(), usuario.getSenha(), new HashSet<>());
+		return new User(usuario.getEmail(), usuario.getSenha(), getPermissoes(usuario));
 	}
 
+	private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
+		Set<SimpleGrantedAuthority> authorities = new HashSet<>();	
+		
+		List<String> permissoes = this.usuarios.permissoes(usuario);
+		permissoes.forEach(permissao -> authorities.add(new SimpleGrantedAuthority(permissao.toUpperCase())));
+		
+		return authorities;
+	}
 }

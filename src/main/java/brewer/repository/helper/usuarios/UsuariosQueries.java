@@ -11,3 +11,4 @@ public interface UsuariosQueries {
 	List<String> permissoes(Usuario usuario);
 
 }
+

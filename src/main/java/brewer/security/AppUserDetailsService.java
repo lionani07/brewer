@@ -1,10 +1,9 @@
+
 package brewer.security;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,11 +33,12 @@ public class AppUserDetailsService implements UserDetailsService {
 	}
 
 	private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
-		Set<SimpleGrantedAuthority> authorities = new HashSet<>();	
-		
-		List<String> permissoes = this.usuarios.permissoes(usuario);
-		permissoes.forEach(permissao -> authorities.add(new SimpleGrantedAuthority(permissao.toUpperCase())));
-		
-		return authorities;
+		return this.usuarios
+				.permissoes(usuario)
+				.stream()
+				.map(SimpleGrantedAuthority::new)
+				.collect(Collectors.toList());
 	}
+
 }
+

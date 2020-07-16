@@ -22,9 +22,6 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		/* Esse aqui deu error.
-		 * return new BCryptPasswordEncoder(); 
-		 * */		
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 	
@@ -45,8 +42,8 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/cidades/nova").hasRole("CADATRASTRAR_CIDADE")	
-				.antMatchers("/usuarios/**").hasRole("CADASTRAR_USUARIO")
+				.antMatchers("/cidades/nova").hasAnyAuthority("CADATRASTRAR_CIDADE")	
+				.antMatchers("/usuarios/**").hasAnyAuthority("CADASTRAR_USUARIO")
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()

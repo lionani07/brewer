@@ -32,7 +32,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 <div class="container-fluid">
 
 <div th:replace="fragments/MessageSuccess :: alert"></div>
-<form method="post" th:object="${cerveja}" class="form-vertical">
+<form method="post" th:object="${cerveja}" th:action="@{/cervejas/novo}" class="form-vertical">
 	
 	<div th:replace="fragments/MessagensErroValidacao :: alert"></div>
 	

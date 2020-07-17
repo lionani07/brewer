@@ -32,7 +32,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 
 	<th:block th:replace="fragments/MessageSuccess :: alert"></th:block>
 	
-	<form method="post" th:object="${cliente}">
+	<form method="post" th:object="${cliente}" th:action="@{/clientes/novo}">
 	
 	<th:block th:replace="fragments/MessagensErroValidacao :: alert"></th:block>
 	

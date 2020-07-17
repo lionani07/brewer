@@ -20,7 +20,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 <div class="container-fluid">
 
 	<th:block th:replace="fragments/MessageSuccess :: alert"></th:block>
-	<form th:object="${usuario}" method="post">	
+	<form th:object="${usuario}" method="post" th:action="@{/usuarios/novo}">	
 	<div th:replace="fragments/MessagensErroValidacao :: alert"></div>
 	
 		<div class="row">

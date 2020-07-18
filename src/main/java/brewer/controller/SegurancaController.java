@@ -19,6 +19,6 @@ public class SegurancaController {
 	@GetMapping("/403")
 	public String accesoNegado() {
 		return "403";
-	}
+	}	
 
 }

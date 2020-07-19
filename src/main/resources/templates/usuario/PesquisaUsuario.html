@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<title>Pesquisa de usuario</title>		
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+	
+<div class="page-header">
+	<div class="container-fluid">
+		<div class="row">
+				<div class="col-sm-10">
+					<h1>Pesquisa de usuario</h1>
+				</div>
+				<div class="col-sm-2">
+					<div class="aw-page-header-controls">
+						<a class="btn  btn-default" th:href="@{/usuarios/novo}">
+							<i class="fa fa-plus"></i> <span class="hidden-xs  hidden-sm">Novo usuario</span>
+						</a>					
+					</div>
+				</div>			
+			</div>		
+	</div>
+</div>
+
+<div class="container-fluid">
+
+	<form th:object="${usuarioFilter}">	
+	
+	<div class="row">
+		<div class="col-sm-6 form-group">
+			<label for="nome" class="control-label">Nome</label>
+			<input type="text" id="nome" class="form-control" th:field="*{nome}" >
+		</div>
+		
+		<div class="col-sm-6 form-group">
+			<label for="email" class="control-label">E-mail</label>
+			<input id="email" type="text" class="form-control" th:field="*{email}">
+		</div>
+	</div>	
+	
+	<div class="row">
+			<div class="col-sm-3 form-group">
+				<label class="control-label">Grupos</label>
+				<div>
+					<th:block th:each="grupo : ${grupos}">					
+						<div class="checkbox checkbox-inline">
+							<input type="checkbox" th:value="${grupo.codigo}" th:field="*{grupos}">
+							<label th:for="${#ids.prev('grupos')}">[[${grupo.nome}]]</label>
+						</div>
+					</th:block>								
+				</div>				
+			</div>			
+		</div>	
+	
+	<input type="submit" class="btn btn-sm btn-primary" value="Pesquisar">
+	</form>
+	
+
+<div class="table-responsive">
+<table class="table table-hover">
+	<thead>
+		<tr class="row">
+			<th class="col-sm-6">
+				<th:block th:replace="fragments/Ordenacao :: order(${pagina}, 'nome', 'Nome')"></th:block>			
+			</th>
+			
+			<th class="col-sm-4">			
+				<th:block th:replace="fragments/Ordenacao :: order(${pagina}, 'email', 'E-mail')"></th:block>				
+			</th>	
+			
+			<th class="col-sm-1">Status</th>
+						
+			<th class="col-sm-1 js-tabela-acoes"></th>	
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="usuario : ${pagina.conteudo}" class="row">			
+			<td class="col-sm-6">[[${usuario.nome}]]</td>
+			<td class="col-sm-4">[[${usuario.email}]]</td>
+			<td class="col-sm-1">[[${usuario.ativo}]]</td>								
+			<td class="col-sm-1 text-center">
+				<a class="btn btn-link btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
+				<a class="btn btn-link btn-xs" title="Excluir"><i class="fa fa-trash"></i></a>
+			</td>
+		</tr>
+		<tr th:if="${pagina.vazia}">
+			<td colspan="7">Nehum usuario encontrado!</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<th:block th:replace="fragments/Paginacao :: paginacao(${pagina})"></th:block>	
+</div>
+
+</section>
+</body>
+</html>

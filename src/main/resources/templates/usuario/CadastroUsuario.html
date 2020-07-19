@@ -4,16 +4,24 @@
 layout:decorate="~{layout/LayoutPadrao}">
 
 <head>
-	<title>Cadastro de usuarios</title>	
+	<title>Cadastro de usuario</title>	
 	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}"/>	
 </head>
 
 <body>
 <section layout:fragment="conteudo">
-	
 <div class="page-header">
 	<div class="container-fluid">
-		<h1>Cadastro de usuarios</h1>
+		<div class="row">
+			<div class="col-sm-10"><h1>Cadastro de usuario</h1>	</div>
+			<div class="col-sm-2">
+				<div class="aw-page-header-controls">
+					<a class="btn  btn-default" th:href="@{/usuarios}">
+						<i class="fa fa-search"></i> <span class="hidden-xs  hidden-sm">Pesquisa</span>
+					</a>					
+				</div>
+			</div>			
+		</div>		
 	</div>
 </div>
 

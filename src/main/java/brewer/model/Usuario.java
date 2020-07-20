@@ -140,4 +140,8 @@ public class Usuario implements Serializable {
 		this.dataNascimento = dataNascimento;
 	}
 	
+	public String getStatus() {
+		return this.ativo ? "Ativo" : "Inativo";
+	}
+	
 }

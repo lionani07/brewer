@@ -65,13 +65,15 @@ layout:decorate="~{layout/LayoutPadrao}">
 <table class="table table-hover">
 	<thead>
 		<tr class="row">
-			<th class="col-sm-6">
+			<th class="col-sm-4">
 				<th:block th:replace="fragments/Ordenacao :: order(${pagina}, 'nome', 'Nome')"></th:block>			
 			</th>
 			
 			<th class="col-sm-4">			
 				<th:block th:replace="fragments/Ordenacao :: order(${pagina}, 'email', 'E-mail')"></th:block>				
-			</th>	
+			</th>
+			
+			<th class="col-sm-2">Grupo</th>	
 			
 			<th class="col-sm-1">Status</th>
 						
@@ -80,9 +82,15 @@ layout:decorate="~{layout/LayoutPadrao}">
 	</thead>
 	<tbody>
 		<tr th:each="usuario : ${pagina.conteudo}" class="row">			
-			<td class="col-sm-6">[[${usuario.nome}]]</td>
+			<td class="col-sm-4">[[${usuario.nome}]]</td>
 			<td class="col-sm-4">[[${usuario.email}]]</td>
-			<td class="col-sm-1">[[${usuario.ativo}]]</td>								
+			<td class="col-sm-2">
+				<th:block th:each="grupo : ${usuario.grupos}">
+					<span>[[${grupo.nome}]]</span>
+					<span th:if=${!grupoStat.last}>, </span>
+				</th:block>
+			</td>
+			<td class="col-sm-1">[[${usuario.status}]]</td>								
 			<td class="col-sm-1 text-center">
 				<a class="btn btn-link btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
 				<a class="btn btn-link btn-xs" title="Excluir"><i class="fa fa-trash"></i></a>

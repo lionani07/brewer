@@ -81,7 +81,7 @@ public class UsuariosImpl implements UsuariosQueries{
 				criteria.add(Restrictions.ilike("email", filtro.getEmail(), MatchMode.START));
 			}
 			
-			criteria.createAlias("grupos", "g", JoinType.LEFT_OUTER_JOIN); // Inizialize toMany relations
+			//criteria.createAlias("grupos", "g", JoinType.LEFT_OUTER_JOIN); // Inizialize toMany relations
 			if (Objects.nonNull(filtro.getGrupos()) && !filtro.getGrupos().isEmpty()) {
 				List<Criterion> subQueries = new ArrayList<>();
 				

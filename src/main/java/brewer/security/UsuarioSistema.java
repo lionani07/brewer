@@ -16,6 +16,10 @@ public class UsuarioSistema extends User{
 		super(usuario.getEmail(), usuario.getSenha(), authorities);		
 		this.usuario = usuario;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
 	
 	public String getNomeUserLogado() {
 		return this.usuario.getNome();

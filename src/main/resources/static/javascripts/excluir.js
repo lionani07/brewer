@@ -8,6 +8,11 @@ Brewer.Excluir = (function() {
 
     Excluir.prototype.iniciar = function() {
         this.btnExcluir.on('click', onExcluir.bind(this));
+
+        if (window.location.search.indexOf('excluido') > -1) {
+            swal('Pronto!', 'Ecluido com successo!', 'success');
+        }
+
     }
 
     function onExcluir(event) {
@@ -31,7 +36,10 @@ Brewer.Excluir = (function() {
 	}
 
     function onDeletadoConSucceso() {
-        window.location.reload();
+        var urlAtual = window.location.href;
+        var separador = urlAtual.indexOf('?')  > -1 ? '&' : '?';
+        var novaUrl = urlAtual.indexOf('excluido') > -1 ? urlAtual : urlAtual + separador + 'excluido';
+        window.location = novaUrl;
     }
 
     return Excluir;

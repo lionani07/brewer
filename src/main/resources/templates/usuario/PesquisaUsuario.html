@@ -60,7 +60,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 	<input type="submit" class="btn btn-sm btn-primary" value="Pesquisar">
 	</form>
 	
-	<div class="aw-datatable-toolbar js-url" th:attr="data-url=@{/usuarios/status}">
+	<div class="aw-datatable-toolbar">
 	
 		<button class="btn btn-default btn-xs js-btn-action disabled" th:attr="data-action='ATIVAR'">
 			<span>Ativar</span>
@@ -95,7 +95,7 @@ layout:decorate="~{layout/LayoutPadrao}">
 			
 			<th class="col-sm-1">Status</th>
 						
-			<th class="col-sm-1 js-tabela-acoes"></th>	
+			<th class="col-sm-1 js-tabela-acoes"></th>	com
 		</tr>
 	</thead>
 	<tbody>
@@ -114,16 +114,14 @@ layout:decorate="~{layout/LayoutPadrao}">
 					<span th:if=${!grupoStat.last}>, </span>
 				</th:block>
 			</td>
-			<td class="col-sm-1">
-				<span class="label" th:classappend="${usuario.ativo} ? label-success : label-danger">[[${usuario.status}]]</span>
-			</td>								
+			<td class="col-sm-1">[[${usuario.status}]]</td>								
 			<td class="col-sm-1 text-center">
 				<a class="btn btn-link btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
 				<a class="btn btn-link btn-xs" title="Excluir"><i class="fa fa-trash"></i></a>
 			</td>
 		</tr>
 		<tr th:if="${pagina.vazia}">
-			<td colspan="6">Nehum usuario encontrado!</td>
+			<td colspan="7">Nehum usuario encontrado!</td>
 		</tr>
 	</tbody>
 </table>

@@ -26,4 +26,8 @@ public class CadastroCervejaService {
 		publisher.publishEvent(new CervejaSalvaEvent(cerveja));
 		
 	}
+
+	public void delete(Long codigo) {
+		this.cervejas.deleteById(codigo);
+	}
 }

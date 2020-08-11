@@ -117,9 +117,9 @@ layout:decorate="~{layout/LayoutPadrao}">
 			<td>[[${cerveja.estilo.nome}]]</td>
 			<td>[[${cerveja.origem.descricao}]]</td>
 			<td class="text-right">R$ [[${cerveja.valor}]]</td>
-			<td class="text-center">
+			<td>
 				<a class="btn btn-link btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
-				<a class="btn btn-link btn-xs" title="Excluir"><i class="fa fa-trash"></i></a>
+				<a th:attr="data-url=@{/cervejas/{codigo}(codigo=${cerveja.codigo})}" class="btn btn-link btn-xs js-excluir" title="Excluir"><i class="fa fa-trash"></i></a>
 			</td>
 		</tr>
 		<tr th:if="${pagina.vazia}">
@@ -132,5 +132,8 @@ layout:decorate="~{layout/LayoutPadrao}">
 <th:block th:replace="fragments/Paginacao :: paginacao(${pagina})"></th:block>	
 </div>
 </section>
+<th:block layout:fragment="js-extra">
+	<script th:src="@{/javascripts/excluir.js}"></script>		
+</th:block>
 </body>
 </html>

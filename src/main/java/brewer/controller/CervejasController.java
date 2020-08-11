@@ -44,7 +44,7 @@ public class CervejasController {
 		return mv;
 	}
 
-	@PostMapping("/novo")
+	@PostMapping({ "/novo", "{\\d+}" })
 	public ModelAndView salvar(@Valid Cerveja cerveja, BindingResult result, RedirectAttributes attributes) {
 		if (result.hasErrors()) {
 			return novo(cerveja);
@@ -70,6 +70,13 @@ public class CervejasController {
 	public ResponseEntity<?> delete(@PathVariable Long codigo) {
 		this.cadastroCervejaService.delete(codigo);
 		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping("/{codigo}")
+	public ModelAndView editar(@PathVariable("codigo") Cerveja cerveja) {
+		ModelAndView mv = novo(cerveja);
+		mv.addObject(cerveja);
+		return mv;
 	}
 
 }

@@ -2,6 +2,7 @@ package brewer.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,6 +26,8 @@ import org.springframework.format.annotation.NumberFormat;
 import org.springframework.util.StringUtils;
 
 import brewer.validation.SKU;
+
+import static java.util.Objects.isNull;
 
 @Entity
 @Table(name = "cerveja")
@@ -196,6 +199,10 @@ public class Cerveja implements Serializable{
 	
 	public String getFotoOrMock() {
 		return !StringUtils.isEmpty(foto) ? foto : "cerveja-mock.png";
+	}
+
+	public boolean isNova() {
+		return isNull(this.codigo);
 	}
 
 	@Override
